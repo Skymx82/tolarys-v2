@@ -106,11 +106,11 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="flex-1 relative h-[500px] flex items-center justify-center"
+            className="flex-1 relative md:h-[500px] h-[300px] flex items-center justify-center"
           >
             <div className="relative w-full h-full max-w-[500px] mx-auto">
               {/* Image SVG de comparaison */}
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-full h-full flex items-center justify-center">
                 <img 
                   src="/accessibility-comparison-new.svg" 
                   alt="Comparaison entre site accessible et non accessible" 
