@@ -169,7 +169,7 @@ const OffersSection = () => {
           <p className="text-[#86868B] mb-6">
             Besoin d'une solution personnalisée ? Contactez-nous pour discuter de vos besoins spécifiques.
           </p>
-          <Link href="/contact">
+          <Link href="#contact">
             <motion.div
               className="inline-block py-3 px-8 rounded-lg bg-gradient-to-r from-[#6366F1] via-[#D946EF] to-[#EC4899] text-white font-medium"
               whileHover={{ scale: 1.05 }}

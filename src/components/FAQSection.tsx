@@ -121,7 +121,7 @@ const FAQSection = () => {
             Vous avez d'autres questions ? N'hésitez pas à nous contacter.
           </p>
           <a 
-            href="/contact"
+            href="#contact"
             className="inline-block py-3 px-8 rounded-lg bg-gradient-to-r from-[#6366F1] via-[#D946EF] to-[#EC4899] text-white font-medium transition-transform hover:scale-105 active:scale-95"
           >
             Nous contacter
