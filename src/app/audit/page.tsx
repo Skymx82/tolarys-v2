@@ -122,11 +122,20 @@ const AuditPage = () => {
       return;
     }
 
-    // Simulation d'envoi (à remplacer par votre logique d'API)
     try {
-      // Simuler un délai d'envoi
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      const response = await fetch('/api/send-audit-request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Erreur lors de l\'envoi');
+      }
+
       // Réinitialiser le formulaire et afficher le message de succès
       setFormData({
         siteUrl: "",
@@ -144,7 +153,7 @@ const AuditPage = () => {
       setIsSubmitted(true);
       setIsSubmitting(false);
     } catch (err) {
-      setError("Une erreur est survenue. Veuillez réessayer.");
+      setError(err instanceof Error ? err.message : "Une erreur est survenue. Veuillez réessayer.");
       setIsSubmitting(false);
     }
   };

@@ -7,6 +7,9 @@ const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    company: "",
+    website: "",
+    requestType: "devis",
     message: ""
   });
   
@@ -14,7 +17,7 @@ const ContactSection = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -28,8 +31,8 @@ const ContactSection = () => {
     setError("");
     
     // Validation simple
-    if (!formData.name || !formData.email || !formData.message) {
-      setError("Veuillez remplir tous les champs");
+    if (!formData.name || !formData.email || !formData.company || !formData.website) {
+      setError("Veuillez remplir tous les champs obligatoires");
       setIsSubmitting(false);
       return;
     }
@@ -41,11 +44,21 @@ const ContactSection = () => {
     }
 
     try {
-      // Simuler un délai d'envoi
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Envoi via EmailJS (service gratuit sans serveur)
+      const response = await fetch('/api/send-quote-request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'envoi');
+      }
       
       // Réinitialiser le formulaire et afficher le message de succès
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", company: "", website: "", requestType: "devis", message: "" });
       setIsSubmitted(true);
       setIsSubmitting(false);
     } catch (err) {
@@ -64,10 +77,10 @@ const ContactSection = () => {
           viewport={{ once: true, margin: "-100px" }}
         >
           <h2 className="text-3xl font-bold mb-4 text-[#1D1D1F]">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#6366F1] via-[#D946EF] to-[#EC4899]">Contactez-nous</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#6366F1] via-[#D946EF] to-[#EC4899]">Demander un devis</span>
           </h2>
           <p className="text-[#86868B] max-w-2xl mx-auto">
-            Une question ? N'hésitez pas à nous contacter
+            Obtenez un devis personnalisé pour votre audit d'accessibilité
           </p>
         </motion.div>
 
@@ -79,51 +92,104 @@ const ContactSection = () => {
         >
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-[#1D1D1F] mb-2">
-                  Votre nom
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Votre nom"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#6366F1] focus:border-transparent outline-none transition placeholder-gray-500"
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-[#1D1D1F] mb-2">
+                    Nom complet *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Votre nom complet"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#6366F1] focus:border-transparent outline-none transition placeholder-gray-500"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-[#1D1D1F] mb-2">
+                    Email professionnel *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="vous@entreprise.com"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#6366F1] focus:border-transparent outline-none transition placeholder-gray-500"
+                    required
+                  />
+                </div>
               </div>
-              
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="company" className="block text-sm font-medium text-[#1D1D1F] mb-2">
+                    Nom de l'entreprise *
+                  </label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    placeholder="Votre entreprise"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#6366F1] focus:border-transparent outline-none transition placeholder-gray-500"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="website" className="block text-sm font-medium text-[#1D1D1F] mb-2">
+                    Site web à auditer *
+                  </label>
+                  <input
+                    type="url"
+                    id="website"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    placeholder="https://votre-site.com"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#6366F1] focus:border-transparent outline-none transition placeholder-gray-500"
+                    required
+                  />
+                </div>
+              </div>
+
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-[#1D1D1F] mb-2">
-                  Votre email
+                <label htmlFor="requestType" className="block text-sm font-medium text-[#1D1D1F] mb-2">
+                  Type de demande
                 </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
+                <select
+                  id="requestType"
+                  name="requestType"
+                  value={formData.requestType}
                   onChange={handleChange}
-                  placeholder="vous@exemple.com"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#6366F1] focus:border-transparent outline-none transition placeholder-gray-500"
-                  required
-                />
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#6366F1] focus:border-transparent outline-none transition"
+                >
+                  <option value="devis">Devis pour audit d'accessibilité</option>
+                  <option value="correction">Devis pour correction des violations</option>
+                  <option value="audit-complet">Audit complet + rapport détaillé</option>
+                  <option value="consultation">Consultation technique</option>
+                </select>
               </div>
               
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-[#1D1D1F] mb-2">
-                  Votre message
+                  Message (optionnel)
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Comment pouvons-nous vous aider ?"
+                  placeholder="Décrivez vos besoins spécifiques, contraintes ou questions..."
                   rows={4}
                   className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#6366F1] focus:border-transparent outline-none transition placeholder-gray-500"
-                  required
                 />
               </div>
 
@@ -145,7 +211,7 @@ const ContactSection = () => {
                 disabled={isSubmitting}
                 className={`w-full py-3 px-6 rounded-lg bg-gradient-to-r from-[#6366F1] via-[#D946EF] to-[#EC4899] text-white font-medium transition-transform hover:scale-105 active:scale-95 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
-                {isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}
+                {isSubmitting ? 'Envoi en cours...' : 'Demander un devis gratuit'}
               </button>
             </form>
           ) : (
@@ -155,15 +221,15 @@ const ContactSection = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#1D1D1F] mb-4">Message envoyé avec succès !</h3>
+              <h3 className="text-2xl font-bold text-[#1D1D1F] mb-4">Demande de devis envoyée !</h3>
               <p className="text-[#86868B] mb-6">
-                Merci de nous avoir contactés. Nous vous répondrons dans les plus brefs délais.
+                Merci pour votre demande de devis. Nous analyserons votre site web et vous enverrons une proposition personnalisée sous 24h.
               </p>
               <button
                 onClick={() => setIsSubmitted(false)}
                 className="py-2 px-6 rounded-lg border border-[#6366F1] text-[#6366F1] font-medium transition-colors hover:bg-[#6366F1] hover:text-white"
               >
-                Envoyer un autre message
+                Faire une nouvelle demande
               </button>
             </div>
           )}

@@ -46,7 +46,6 @@ const MentionsLegalesPage = () => {
                 <li><strong>Numéro SIRET :</strong> 94208529100014</li>
                 <li><strong>Adresse :</strong> Toulouse, France</li>
                 <li><strong>Email :</strong> <a href="mailto:tolarystoulouse@gmail.com" className="text-[#6366F1] hover:underline">tolarystoulouse@gmail.com</a></li>
-                <li><strong>Téléphone :</strong> +33 6 79 33 68 12</li>
               </ul>
               <p className="text-[#86868B]">
                 <strong>Responsable de la publication</strong><br />

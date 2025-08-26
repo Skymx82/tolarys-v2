@@ -147,22 +147,6 @@ const OffersSection = () => {
         </div>
 
         <motion.div 
-          className="bg-gray-50 rounded-xl p-8 mb-8"
-          {...fadeInAnimation}
-        >
-          <h3 className="text-xl font-bold text-[#1D1D1F] mb-4">Services additionnels</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {additionalServices.map((service) => (
-              <div key={service.id} className="bg-white p-6 rounded-lg border border-gray-100 shadow-sm">
-                <h4 className="text-lg font-bold text-[#1D1D1F] mb-2">{service.name}</h4>
-                <p className="text-[#86868B] text-sm mb-3">{service.description}</p>
-                <div className="font-bold text-[#1D1D1F]">{service.price}</div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div 
           className="text-center"
           {...fadeInAnimation}
         >
