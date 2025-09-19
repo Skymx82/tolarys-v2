@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     images: ['/twitter-image.jpg'],
   },
   alternates: {
-    canonical: 'https://tolarys.fr',
+    canonical: 'https://tolarys-toulouse.fr',
   },
   robots: {
     index: true,

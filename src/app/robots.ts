@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://tolarys.fr/sitemap.xml',
+    sitemap: 'https://tolarys-toulouse.fr/sitemap.xml',
   };
 }

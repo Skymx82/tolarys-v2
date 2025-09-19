@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://tolarys.fr';
+  const baseUrl = 'https://tolarys-toulouse.fr';
   
   // Date de dernière modification (aujourd'hui)
   const lastModified = new Date().toISOString();

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://tolarys.fr/sitemap.xml
+Sitemap: https://tolarys-toulouse.fr/sitemap.xml
